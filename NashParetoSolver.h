@@ -1,15 +1,15 @@
 #pragma once
 #include "BimatrixGame.h"
 
-using MatrixGame = std::vector<std::vector<double>>;
+using Matrix = std::vector<std::vector<double>>;
 
 class NashParetoSolver {
 private:
 	BimatrixGame	m_gameMatrix;
-	MatrixGame		m_firstPlayerMatrix;
-	MatrixGame		m_secondPlayerMatrix;
-	MatrixGame		m_x;
-	MatrixGame		m_y;
+	Matrix		m_firstPlayerMatrix;
+	Matrix		m_secondPlayerMatrix;
+	Matrix		m_x;
+	Matrix		m_y;
 	
 	std::vector<std::pair<double, double>> m_nashEquilibrium;
 	std::vector<std::pair<double, double>> m_paretoOptimality;
@@ -22,12 +22,12 @@ private:
 	void PrintParetoOptimality();
 	void PrintNashParetoIntersection();
 
-	double GetGameValue(MatrixGame matrix);
-	MatrixGame GetInverse(const MatrixGame vect);
-	MatrixGame GetCofactor(const MatrixGame vect);
-	MatrixGame GetTranspose(const MatrixGame matrix1);
-	MatrixGame MultMatrix(const MatrixGame lhs, const MatrixGame rhs);
-	double GetDeterminant(const MatrixGame vect);
+	double GetGameValue(Matrix matrix);
+	Matrix GetInverse(const Matrix vect);
+	Matrix GetCofactor(const Matrix vect);
+	Matrix GetTranspose(const Matrix matrix1);
+	Matrix MultMatrix(const Matrix lhs, const Matrix rhs);
+	double GetDeterminant(const Matrix vect);
 
 public:
 	NashParetoSolver();

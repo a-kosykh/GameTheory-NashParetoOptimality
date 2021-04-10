@@ -67,9 +67,9 @@ bool NashParetoSolver::FindParetoOptimality()
 
 bool NashParetoSolver::FindEquilibriumSituation()
 {
-	MatrixGame v2 = { {GetGameValue(m_secondPlayerMatrix)} };
-	MatrixGame v1 = { {GetGameValue(m_firstPlayerMatrix)} };
-	MatrixGame ident = { {1, 1} };
+	Matrix v2 = { {GetGameValue(m_secondPlayerMatrix)} };
+	Matrix v1 = { {GetGameValue(m_firstPlayerMatrix)} };
+	Matrix ident = { {1, 1} };
 
 	m_x = MultMatrix(MultMatrix(v2, ident), GetInverse(m_secondPlayerMatrix));
 	m_y = GetTranspose(MultMatrix(MultMatrix(GetInverse(m_firstPlayerMatrix), GetTranspose(ident)), v1));
@@ -118,24 +118,24 @@ void NashParetoSolver::PrintNashParetoIntersection()
 	std::cout << "}";
 }
 
-double NashParetoSolver::GetGameValue(MatrixGame matrix)
+double NashParetoSolver::GetGameValue(Matrix matrix)
 {
-	MatrixGame ident = { {1, 1} };
-	MatrixGame identTrans = GetTranspose(ident);
+	Matrix ident = { {1, 1} };
+	Matrix identTrans = GetTranspose(ident);
 
-	MatrixGame ansMatrix = MultMatrix(MultMatrix(ident, GetInverse(matrix)), identTrans);
+	Matrix ansMatrix = MultMatrix(MultMatrix(ident, GetInverse(matrix)), identTrans);
 
 	return (1 / ansMatrix[0][0]);
 }
 
-MatrixGame NashParetoSolver::GetInverse(const MatrixGame vect)
+Matrix NashParetoSolver::GetInverse(const Matrix vect)
 {
 	if (GetDeterminant(vect) == 0) {
 		throw std::runtime_error("Determinant is 0");
 	}
 
 	double d = 1.0 / GetDeterminant(vect);
-	MatrixGame solution(vect.size(), std::vector<double>(vect.size()));
+	Matrix solution(vect.size(), std::vector<double>(vect.size()));
 
 	for (size_t i = 0; i < vect.size(); i++) {
 		for (size_t j = 0; j < vect.size(); j++) {
@@ -154,14 +154,14 @@ MatrixGame NashParetoSolver::GetInverse(const MatrixGame vect)
 	return solution;
 }
 
-MatrixGame NashParetoSolver::GetCofactor(const MatrixGame vect)
+Matrix NashParetoSolver::GetCofactor(const Matrix vect)
 {
 	if (vect.size() != vect[0].size()) {
 		throw std::runtime_error("Matrix is not quadratic");
 	}
 
-	MatrixGame solution(vect.size(), std::vector<double>(vect.size()));
-	MatrixGame subVect(vect.size() - 1, std::vector<double>(vect.size() - 1));
+	Matrix solution(vect.size(), std::vector<double>(vect.size()));
+	Matrix subVect(vect.size() - 1, std::vector<double>(vect.size() - 1));
 
 	for (std::size_t i = 0; i < vect.size(); i++) {
 		for (std::size_t j = 0; j < vect[0].size(); j++) {
@@ -189,9 +189,9 @@ MatrixGame NashParetoSolver::GetCofactor(const MatrixGame vect)
 	return solution;
 }
 
-MatrixGame NashParetoSolver::GetTranspose(const MatrixGame matrix1)
+Matrix NashParetoSolver::GetTranspose(const Matrix matrix1)
 {
-	MatrixGame solution(matrix1[0].size(), std::vector<double>(matrix1.size()));
+	Matrix solution(matrix1[0].size(), std::vector<double>(matrix1.size()));
 
 	for (size_t i = 0; i < matrix1.size(); i++) {
 		for (size_t j = 0; j < matrix1[0].size(); j++) {
@@ -201,13 +201,13 @@ MatrixGame NashParetoSolver::GetTranspose(const MatrixGame matrix1)
 	return solution;
 }
 
-MatrixGame NashParetoSolver::MultMatrix(const MatrixGame lhs, const MatrixGame rhs)
+Matrix NashParetoSolver::MultMatrix(const Matrix lhs, const Matrix rhs)
 {
 	const int lhsRowsCount = lhs.size();
 	const int lhsColsCount = lhs[0].size();
 	const int rhsColsCount = rhs[0].size();
 
-	MatrixGame solution(lhsRowsCount, std::vector<double>(rhsColsCount, 0));
+	Matrix solution(lhsRowsCount, std::vector<double>(rhsColsCount, 0));
 	for (auto j = 0; j < rhsColsCount; ++j)
 	{
 		for (auto k = 0; k < lhsColsCount; ++k)
@@ -221,7 +221,7 @@ MatrixGame NashParetoSolver::MultMatrix(const MatrixGame lhs, const MatrixGame r
 	return solution;
 }
 
-double NashParetoSolver::GetDeterminant(const MatrixGame vect)
+double NashParetoSolver::GetDeterminant(const Matrix vect)
 {
 	if (vect.size() != vect[0].size()) {
 		throw std::runtime_error("Matrix is not quadratic");
@@ -244,7 +244,7 @@ double NashParetoSolver::GetDeterminant(const MatrixGame vect)
 	int sign = 1;
 	for (int i = 0; i < dimension; i++) {
 
-		MatrixGame subVect(dimension - 1, std::vector<double>(dimension - 1));
+		Matrix subVect(dimension - 1, std::vector<double>(dimension - 1));
 		for (int m = 1; m < dimension; m++) {
 			int z = 0;
 			for (int n = 0; n < dimension; n++) {
