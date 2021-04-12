@@ -20,6 +20,10 @@ BimatrixGame test = {
 	{{0.0, 1.0}, {11.0, 4.0}},
 	{{7.0, 8.0}, {6.0, 3.0}}
 };
+BimatrixGame test2 = {
+	{{5.0, 8.0}, {7.0, 4.0}},
+	{{11.0, 7.0}, {6.0, 9.0}}
+};
 
 int main() {
 
@@ -53,8 +57,8 @@ int main() {
 	std::cout << std::endl << std::endl;
 
 	std::cout << "theorem test Game:" << std::endl;
-	printGame(test);
-	NashParetoSolver testGS(test);
+	printGame(test2);
+	NashParetoSolver testGS(test2);
 	testGS.iSolve();
 	testGS.iPrint();
 	testGS.iSolveTheorem();
