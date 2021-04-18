@@ -1,10 +1,7 @@
 #include <iostream>
 #include "NashParetoSolver.h"
 
-BimatrixGame crossRoad = {
-	{{1, 1}, {1, 2}},
-	{{2, 1}, {0, 0}}
-};
+
 
 BimatrixGame familyDispute = {
 	{{4, 1}, {0, 0}},
@@ -45,6 +42,12 @@ int main() {
 	std::cout << std::endl << std::endl;
 
 	std::cout << "CrossRoad Game:" << std::endl;
+	double e1 = 0.5;
+	double e2 = 1.2;
+	BimatrixGame crossRoad = {
+		{{1, 1}, {1 - e1, 2}},
+		{{2, 1 - e2}, {0, 0}}
+	};
 	printGame(crossRoad);
 	NashParetoSolver crossRoadGS(crossRoad);
 	crossRoadGS.iSolve();
