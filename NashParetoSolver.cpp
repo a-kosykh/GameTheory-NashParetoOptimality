@@ -73,6 +73,8 @@ bool NashParetoSolver::FindEquilibriumSituation()
 
 	m_x = MultMatrix(MultMatrix(v2, ident), GetInverse(m_secondPlayerMatrix));
 	m_y = GetTranspose(MultMatrix(MultMatrix(GetInverse(m_firstPlayerMatrix), GetTranspose(ident)), v1));
+	m_firstPlayerGameValue = v1.at(0).at(0);
+	m_secondPlayerGameValue = v2.at(0).at(0);
 
 	return true;
 }
@@ -267,6 +269,8 @@ NashParetoSolver::NashParetoSolver() {}
 NashParetoSolver::NashParetoSolver(BimatrixGame gm)
 {
 	m_gameMatrix = gm;
+	m_firstPlayerGameValue = 0.0;
+	m_secondPlayerGameValue = 0.0;
 	for (const auto &row : m_gameMatrix) {
 		std::vector<double> firstPlayerRow;
 		std::vector<double> secondPlayerRow;
@@ -290,6 +294,7 @@ void NashParetoSolver::iSolveTheorem()
 	FindEquilibriumSituation();
 	std::cout << std::endl;
 	iPrintXY();
+	iPrintGameValue();
 }
 
 void NashParetoSolver::iPrint()
@@ -304,18 +309,29 @@ void NashParetoSolver::iPrint()
 void NashParetoSolver::iPrintXY()
 {
 	std::cout << "x = [";
+	double xSum = 0.0;
 	for (auto i = 0; i < m_x.at(0).size(); ++i) {
+		xSum += m_x.at(0).at(i);
 		std::cout << std::setprecision(3) << m_x.at(0).at(i);
 		if (i != m_x.at(0).size() - 1)
 			std::cout << ", ";
 	}
-	std::cout << "]" << std::endl;
+	std::cout << "] xSum = " << xSum;
+	std::cout << std::endl;
 
 	std::cout << "y = [";
+	double ySum = 0.0;
 	for (auto i = 0; i < m_y.at(0).size(); ++i) {
+		ySum += m_y.at(0).at(i);
 		std::cout << std::setprecision(3) << m_y.at(0).at(i);
 		if (i != m_y.at(0).size() - 1)
 			std::cout << ", ";
 	}
-	std::cout << "]" << std::endl;
+	std::cout << "] ySum = " << ySum << std::endl;
+}
+
+void NashParetoSolver::iPrintGameValue()
+{
+	std::cout << "Game Value 1 = " << std::setprecision(4) << m_firstPlayerGameValue << std::endl;
+	std::cout << "Game Value 2 = " << std::setprecision(4) << m_secondPlayerGameValue << std::endl;
 }

@@ -26,7 +26,9 @@ BimatrixGame test2 = {
 };
 
 int main() {
-
+	std::cout << "Kosykh A.M" << std::endl;
+	std::cout << "Variant 5" << std::endl;
+	std::cout << "Lab 3" << std::endl;
 	std::cout << "Random 10x10 game:" << std::endl;
 	BimatrixGame randomGame = createRandomGame(10);
 	printGame(randomGame);

@@ -10,7 +10,9 @@ private:
 	Matrix		m_secondPlayerMatrix;
 	Matrix		m_x;
 	Matrix		m_y;
-	
+	double		m_firstPlayerGameValue;
+	double		m_secondPlayerGameValue;
+
 	std::vector<std::pair<double, double>> m_nashEquilibrium;
 	std::vector<std::pair<double, double>> m_paretoOptimality;
 
@@ -36,4 +38,5 @@ public:
 	void iSolveTheorem();
 	void iPrint();
 	void iPrintXY();
+	void iPrintGameValue();
 };
